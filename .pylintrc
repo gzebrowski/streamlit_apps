@@ -1,0 +1,7 @@
+[MASTER]
+disable=
+    C0103, # uppercase naming style
+    W1514,
+    R0914,
+    C0209,
+    R1717

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>%(title)s</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+			padding: 1em;
+        }
+        body.light {
+            background-color: white;
+            color: black;
+        }
+        .txt_line {
+            margin-bottom: 1em;
+        }
+        .maincontent {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+        }
+        .timestamp {
+            display: none;
+            cursor: pointer;
+            color: #e0e0e0;
+        }
+        .timestamp:hover {
+            color: #FFF;
+        }
+        body.show_timestamp .timestamp {
+            display: block;
+        }
+        .form-row {
+            margin-bottom: 1em;
+        }
+        .toolbox {
+            min-width: 580px;
+            padding-left: 1em;
+        }
+    </style>
+<script>
+%(jquery)s
+</script>
+<script>
+    $(document).ready(() => {
+        $('#show_timestamps').on('click', (ev) => {
+            const isChecked = $(ev.target).is(':checked');
+            $('body').toggleClass('show_timestamp', isChecked);
+        });
+    });
+</script>
+
+  </head>
+  <body class="">
+  <div class="maincontent">
+    <div>
+      <br>
+      %(body)s
+      <br>
+    </div>
+    <div class="toolbox">
+      <div class="form-row">
+        <label><input type="checkbox" id="show_timestamps"> Pokaż znaczniki czasu</label>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,7 @@
+streamlit
+openai
+pydub
+python-dotenv
+python-magic
+streamlit-player==0.1.5
+st-click-detector==0.1.3
