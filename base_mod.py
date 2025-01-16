@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from hashlib import sha1
 from typing import Any
 
 import streamlit as st
@@ -9,6 +10,14 @@ from streamlit_env import Env
 env = Env('.env')
 
 OPENAI_API_KEY = env["OPENAI_API_KEY"]
+
+
+def get_bool_env(key: str):
+    val = env.get(key)
+    if val:
+        if str(val).lower().strip() in ['0', 'false', 'no', '']:
+            return False
+    return bool(val)
 
 
 class ProxySessionState:
@@ -99,6 +108,22 @@ class BaseStreamlitApp(ABC):
 
     def clear_logs(self):
         self.session_state.logs_ = []
+
+    def get_api_key(self):
+        api_key = self.session_state.api_key
+        if not api_key:
+            api_key = env.get('OPENAI_API_KEY') if not get_bool_env('LOGIN_MODE') else None
+            api_key = api_key or st.text_input('Podaj klucz api22', type='password')
+            if api_key:
+                hsh = env.get('PWD_HASH')
+                salt = env.get('PWD_SALT')
+                env_api_key = env.get('OPENAI_API_KEY')
+                if hsh and salt and env_api_key:
+                    if sha1(f'{salt} {api_key}'.encode()).hexdigest() == hsh:
+                        api_key = env_api_key
+                self.session_state.api_key = api_key
+                st.rerun()
+        return api_key
 
 
 @st.cache_resource

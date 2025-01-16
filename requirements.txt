@@ -5,3 +5,5 @@ python-dotenv
 python-magic
 streamlit-player==0.1.5
 st-click-detector==0.1.3
+pydantic==2.8.2
+instructor
